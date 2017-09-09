@@ -7,6 +7,11 @@ import json
 HOST = "220.230.117.99:3000"
 API_URL = ""	# nodejs: /mycallback
 
+def save_mp3(content):
+	sound = open("sound.mp3","w")
+	sound.write(content)
+	sound.close()
+
 def post_request(content):
 	server = httplib.HTTP(HOST)
 	server.putrequest("POST",API_URL)
@@ -21,9 +26,10 @@ def post_request(content):
 
 	statuscode, statusmessage, header = server.getreply()
 	result = server.getfile().read()
+	save_mp3(result)
 
 	print(statuscode, statusmessage, header)
-	print(result)
+	#print(result)
 
 def send_image(imgfile_name):
 	with open(imgfile_name,"rb") as image_file:
