@@ -1,5 +1,6 @@
 from lxml import etree
 import httplib
+import urllib2
 import xml.dom.minidom
 import base64
 import json
@@ -8,9 +9,19 @@ HOST = "220.230.117.99:3000"
 API_URL = ""	# nodejs: /mycallback
 
 def save_mp3(content):
-	sound = open("sound.mp3","w")
+	sound = open("sound.mp3","wb")
 	sound.write(content)
 	sound.close()
+
+def get_request():
+	server = httplib.HTTPConnection(HOST)
+	server.request('GET', '/')
+	content = server.getresponse()
+	#print(content)
+	
+
+	save_mp3(content)
+	return content
 
 def post_request(content):
 	server = httplib.HTTP(HOST)
